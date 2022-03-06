@@ -14,14 +14,13 @@ export const config = {
   parent: "phaser",
   width: 1024,
   height: 600,
-  scene: playGame,
-  app1: App
+  scene: playGame
 };
 
 const game = new Phaser.Game(config);
 
 
 ReactDOM.render(
-  <App />,
+  <App game={game} />,
   document.getElementById("root") || document.createElement("div")
 );

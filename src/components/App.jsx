@@ -1,4 +1,4 @@
-import React, { Component, useState }	from 'react';
+import React, { Component, useState, useRef }	from 'react';
 import Dropdown							from 'react-bootstrap/Dropdown';
 import playGame 						from "../phaser/scene";
 import Player							from "../components/Player.jsx";
@@ -12,20 +12,18 @@ class App extends Component {
 		super(props);
 		// Set initial state
 		this.state = {
-			numOfPlayers:	1,
-			dealerScore:	0,
-			playerScore:	0,
-			dealerCards:	[],
-			playerCards:	[]
+			numOfPlayers:			0,
+			dealerScore:			0,
+			playerScore:			0,
+			dealerCards:			[],
+			playerCards:			[],
+			showNumPlayerButton:	false
 		};
 
 		this.cards		= new Cards();
-		this.playGame 	= new playGame;
-		console.log('app:this:24',this.state);
-		// this.playGame	= playGame(this.state);
-		// this.playGame = new playGame(this.state);
-		// this.deck = this.cards.getCardDeck();
-		console.log('app:this:28',this);
+		this.playGame 	= new playGame();
+		this.props = props;
+		sessionStorage.removeItem("howManyPlayer");
 
 
 		// Binding this keyword
@@ -35,9 +33,8 @@ class App extends Component {
 	// handle onChange event of the dropdown
 	updateState = val => {
 		this.setState({ numOfPlayers : val });
+		this.setState({ showNumPlayerButton : true });
 		sessionStorage.setItem('howManyPlayer', val);
-		this.playGame.updateState();
-		console.log('app:this:37', this);
 	}
 
 	render() {
@@ -46,7 +43,7 @@ class App extends Component {
 				<h1>Black Jack</h1>
 				<div>
 					<Dropdown onSelect={this.updateState}>
-						<Dropdown.Toggle variant="primary" id="dropdown-basic">
+						<Dropdown.Toggle variant="primary" id="dropdown-basic" disabled={this.state.showNumPlayerButton}>
 							Select Number of Players: {this.state.numOfPlayers}
 						</Dropdown.Toggle>
 
