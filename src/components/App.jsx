@@ -14,7 +14,9 @@ class App extends Component {
 		this.state = {
 			numOfPlayers:			0,
 			dealerScore:			0,
+			playerScore:			0,
 			dealerCards:			[],
+			playerCards:			[],
 			showNumPlayerButton:	false
 		};
 
@@ -25,12 +27,11 @@ class App extends Component {
 
 
 		// Binding this keyword
-		this.updatePlayerNum = this.updatePlayerNum.bind(this);
+		this.updateState = this.updateState.bind(this);
 	}
 
 	// handle onChange event of the dropdown
-	// initialize the game
-	updatePlayerNum = val => {
+	updateState = val => {
 		this.setState({ numOfPlayers : val });
 		this.setState({ showNumPlayerButton : true });
 		sessionStorage.setItem('howManyPlayer', val);
@@ -41,7 +42,7 @@ class App extends Component {
 			<div style={{ textAlign: "center" }}>
 				<h1>Black Jack</h1>
 				<div>
-					<Dropdown onSelect={this.updatePlayerNum}>
+					<Dropdown onSelect={this.updateState}>
 						<Dropdown.Toggle variant="primary" id="dropdown-basic" disabled={this.state.showNumPlayerButton}>
 							Select Number of Players: {this.state.numOfPlayers}
 						</Dropdown.Toggle>
